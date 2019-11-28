@@ -6,6 +6,7 @@ MAINTAINER rubenromero.tk <ruromeroc@gmail.com>
 #Actualizamos
 RUN apt-get -y update && apt-get -y upgrade
 
+
 #We install apache2 and php7 with all the usual libraries.
 RUN apt-get -y install \
 apache2 \
@@ -28,6 +29,22 @@ php7.0-xmlrpc \
 php7.0-xsl \
 php7.0-mbstring \
 php-gettext
+
+RUN apt-get install -y unzip libaio-dev php5-dev
+
+# Oracle instantclient
+ADD instantclient-basic-linux.x64-12.1.0.2.0.zip /tmp/
+ADD instantclient-sdk-linux.x64-12.1.0.2.0.zip /tmp/
+ADD instantclient-sqlplus-linux.x64-12.1.0.2.0.zip /tmp/
+
+RUN unzip /tmp/instantclient-basic-linux.x64-12.1.0.2.0.zip -d /usr/local/
+RUN unzip /tmp/instantclient-sdk-linux.x64-12.1.0.2.0.zip -d /usr/local/
+RUN unzip /tmp/instantclient-sqlplus-linux.x64-12.1.0.2.0.zip -d /usr/local/
+RUN ln -s /usr/local/instantclient_12_1 /usr/local/instantclient
+RUN ln -s /usr/local/instantclient/libclntsh.so.12.1 /usr/local/instantclient/libclntsh.so
+RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
+RUN echo 'instantclient,/usr/local/instantclient' | pecl install oci8
+RUN echo "extension=oci8.so" > /etc/php5/apache2/conf.d/30-oci8.ini
 
 # install GIT
 RUN apt-get install -y git
@@ -94,7 +111,7 @@ RUN sed -i 's/^ServerSignature/#ServerSignature/g' /etc/apache2/conf-enabled/sec
     echo "SSLProtocol ALL -SSLv2 -SSLv3" >> /etc/apache2/apache2.conf
 
 ADD 000-default.conf /etc/apache2/sites-enabled/000-default.conf
-ADD 001-default-ssl.conf /etc/apache2/sites-enabled/001-default-ssl.conf
+#ADD 001-default-ssl.conf /etc/apache2/sites-enabled/001-default-ssl.conf
 
 #Cleaning a little bt=it the container to make it slimmer.
 RUN apt-get clean
