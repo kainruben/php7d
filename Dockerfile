@@ -44,7 +44,7 @@ RUN ln -s /usr/local/instantclient_12_1 /usr/local/instantclient
 RUN ln -s /usr/local/instantclient/libclntsh.so.12.1 /usr/local/instantclient/libclntsh.so
 RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 RUN echo 'instantclient,/usr/local/instantclient' | pecl install oci8
-RUN echo "extension=oci8.so" > /etc/php7/apache2/conf.d/30-oci8.ini
+
 
 # install GIT
 RUN apt-get install -y git
@@ -102,7 +102,7 @@ RUN echo "error_reporting = E_ALL\n" \
          "error_log = /home/usuario/logs/php.error.log\n" \
          > /etc/php/7.0/cli/conf.d/logerrors.ini
 
-
+RUN echo "extension=oci8.so" > /etc/php7/apache2/conf.d/30-oci8.ini
 RUN sed -i 's/^ServerSignature/#ServerSignature/g' /etc/apache2/conf-enabled/security.conf; \
     sed -i 's/^ServerTokens/#ServerTokens/g' /etc/apache2/conf-enabled/security.conf; \
     echo "ServerSignature Off" >> /etc/apache2/conf-enabled/security.conf; \
