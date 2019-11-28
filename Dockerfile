@@ -30,21 +30,28 @@ php7.0-xsl \
 php7.0-mbstring \
 php-gettext
 
-RUN apt-get install -y unzip
+RUN apt-get install -y unzip php-dev
 
 # Oracle instantclient
 ADD instantclient-basic-linux.x64-12.1.0.2.0.zip /tmp/
 ADD instantclient-sdk-linux.x64-12.1.0.2.0.zip /tmp/
 ADD instantclient-sqlplus-linux.x64-12.1.0.2.0.zip /tmp/
 
-RUN unzip /tmp/instantclient-basic-linux.x64-12.1.0.2.0.zip -d /usr/local/
-RUN unzip /tmp/instantclient-sdk-linux.x64-12.1.0.2.0.zip -d /usr/local/
-RUN unzip /tmp/instantclient-sqlplus-linux.x64-12.1.0.2.0.zip -d /usr/local/
-RUN ln -s /usr/local/instantclient_12_1 /usr/local/instantclient
-RUN ln -s /usr/local/instantclient/libclntsh.so.12.1 /usr/local/instantclient/libclntsh.so
-RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
-RUN echo 'instantclient,/usr/local/instantclient' | pecl install oci8
+RUN unzip /tmp/instantclient-basic-linux.x64-12.1.0.2.0.zip -d /usr/local/bin/
+RUN unzip /tmp/instantclient-sdk-linux.x64-12.1.0.2.0.zip -d /usr/local/bin/
+RUN unzip /tmp/instantclient-sqlplus-linux.x64-12.1.0.2.0.zip -d /usr/local/bin/
+RUN ln -s /usr/local/bin/instantclient_12_1 /usr/local/instantclient
+RUN ln -s /usr/local/bin/instantclient/libclntsh.so.12.1 /usr/local/instantclient/libclntsh.so
+RUN ln -s /usr/local/bin/instantclient/sqlplus /usr/bin/sqlplus
 
+RUN echo 'LD_LIBRARY_PATH="/usr/local/lib/instantclient_11_2"'' >> /etc/environment
+RUN echo 'ORACLE_BASE="/usr/local/lib/instantclient_12_1"'' >> /etc/environment
+RUN echo 'LD_LIBRARY_PATH="/usr/local/lib/instantclient_12_1"'' >> /etc/environment
+RUN echo 'TNS_ADMIN="/usr/local/lib/instantclient_12_1"'' >> /etc/environment
+RUN echo 'ORACLE_HOME="/usr/local/lib/instantclient_12_1"'' >> /etc/environment
+RUN source /etc/environment
+
+RUN echo 'instantclient,/usr/local/lib/instantclient' | pecl install oci8
 
 # install GIT
 RUN apt-get install -y git
