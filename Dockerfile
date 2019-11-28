@@ -44,7 +44,7 @@ RUN ln -s /usr/local/instantclient_12_1 /usr/local/instantclient
 RUN ln -s /usr/local/instantclient/libclntsh.so.12.1 /usr/local/instantclient/libclntsh.so
 RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 RUN echo 'instantclient,/usr/local/instantclient' | pecl install oci8
-RUN echo "extension=oci8.so" > /etc/php5/apache2/conf.d/30-oci8.ini
+RUN echo "extension=oci8.so" > /etc/php7/apache2/conf.d/30-oci8.ini
 
 # install GIT
 RUN apt-get install -y git
