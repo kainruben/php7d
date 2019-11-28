@@ -49,7 +49,7 @@ RUN echo 'ORACLE_BASE="/usr/local/lib/instantclient_12_1"' >> /etc/environment
 RUN echo 'LD_LIBRARY_PATH="/usr/local/lib/instantclient_12_1"' >> /etc/environment
 RUN echo 'TNS_ADMIN="/usr/local/lib/instantclient_12_1"' >> /etc/environment
 RUN echo 'ORACLE_HOME="/usr/local/lib/instantclient_12_1"' >> /etc/environment
-RUN source /etc/environment
+RUN /bin/bash source /etc/environment
 
 RUN echo 'instantclient,/usr/local/lib/instantclient' | pecl install oci8
 
