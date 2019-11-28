@@ -30,7 +30,7 @@ php7.0-xsl \
 php7.0-mbstring \
 php-gettext
 
-RUN apt-get install -y unzip libaio-dev php5-dev
+RUN apt-get install -y unzip
 
 # Oracle instantclient
 ADD instantclient-basic-linux.x64-12.1.0.2.0.zip /tmp/
