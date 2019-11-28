@@ -102,13 +102,14 @@ RUN echo "error_reporting = E_ALL\n" \
          "error_log = /home/usuario/logs/php.error.log\n" \
          > /etc/php/7.0/cli/conf.d/logerrors.ini
 
-RUN echo "extension=oci8.so" > /etc/php7/apache2/conf.d/30-oci8.ini
+RUN echo "extension=oci8.so" > /etc/php/7.0/apache2/conf.d/30-oci8.ini
 RUN sed -i 's/^ServerSignature/#ServerSignature/g' /etc/apache2/conf-enabled/security.conf; \
     sed -i 's/^ServerTokens/#ServerTokens/g' /etc/apache2/conf-enabled/security.conf; \
     echo "ServerSignature Off" >> /etc/apache2/conf-enabled/security.conf; \
     echo "ServerTokens Prod" >> /etc/apache2/conf-enabled/security.conf; \
     a2enmod headers; \
     echo "SSLProtocol ALL -SSLv2 -SSLv3" >> /etc/apache2/apache2.conf
+RUN echo "extension=oci8.so" >> php.ini
 
 ADD 000-default.conf /etc/apache2/sites-enabled/000-default.conf
 #ADD 001-default-ssl.conf /etc/apache2/sites-enabled/001-default-ssl.conf
