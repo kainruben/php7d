@@ -6,7 +6,6 @@ MAINTAINER rubenromero.tk <ruromeroc@gmail.com>
 #Actualizamos
 RUN apt-get -y update && apt-get -y upgrade
 
-
 #We install apache2 and php7 with all the usual libraries.
 RUN apt-get -y install \
 apache2 \
@@ -29,29 +28,6 @@ php7.0-xmlrpc \
 php7.0-xsl \
 php7.0-mbstring \
 php-gettext
-
-RUN apt-get install -y unzip php-dev
-
-# Oracle instantclient
-ADD instantclient-basic-linux.x64-12.1.0.2.0.zip /tmp/
-ADD instantclient-sdk-linux.x64-12.1.0.2.0.zip /tmp/
-ADD instantclient-sqlplus-linux.x64-12.1.0.2.0.zip /tmp/
-
-RUN unzip /tmp/instantclient-basic-linux.x64-12.1.0.2.0.zip -d /usr/local/bin/
-RUN unzip /tmp/instantclient-sdk-linux.x64-12.1.0.2.0.zip -d /usr/local/bin/
-RUN unzip /tmp/instantclient-sqlplus-linux.x64-12.1.0.2.0.zip -d /usr/local/bin/
-RUN ln -s /usr/local/bin/instantclient_12_1 /usr/local/instantclient
-RUN ln -s /usr/local/bin/instantclient/libclntsh.so.12.1 /usr/local/instantclient/libclntsh.so
-RUN ln -s /usr/local/bin/instantclient/sqlplus /usr/bin/sqlplus
-
-RUN echo 'LD_LIBRARY_PATH="/usr/local/bin/instantclient_11_2"' >> /etc/environment
-RUN echo 'ORACLE_BASE="/usr/local/bin/instantclient_12_1"' >> /etc/environment
-RUN echo 'LD_LIBRARY_PATH="/usr/local/bin/instantclient_12_1"' >> /etc/environment
-RUN echo 'TNS_ADMIN="/usr/local/bin/instantclient_12_1"' >> /etc/environment
-RUN echo 'ORACLE_HOME="/usr/local/bin/instantclient_12_1"' >> /etc/environment
-RUN . /etc/environment
-
-RUN echo 'instantclient,/usr/local/lib/instantclient' | pecl install oci8
 
 # install GIT
 RUN apt-get install -y git
@@ -109,18 +85,16 @@ RUN echo "error_reporting = E_ALL\n" \
          "error_log = /home/usuario/logs/php.error.log\n" \
          > /etc/php/7.0/cli/conf.d/logerrors.ini
 
-RUN echo "extension=oci8.so" > /etc/php/7.0/apache2/conf.d/30-oci8.ini
-RUN chmod 777 /etc/php/7.0/apache2/conf.d/30-oci8.ini
+
 RUN sed -i 's/^ServerSignature/#ServerSignature/g' /etc/apache2/conf-enabled/security.conf; \
     sed -i 's/^ServerTokens/#ServerTokens/g' /etc/apache2/conf-enabled/security.conf; \
     echo "ServerSignature Off" >> /etc/apache2/conf-enabled/security.conf; \
     echo "ServerTokens Prod" >> /etc/apache2/conf-enabled/security.conf; \
     a2enmod headers; \
     echo "SSLProtocol ALL -SSLv2 -SSLv3" >> /etc/apache2/apache2.conf
-RUN echo "extension=oci8.so" >> /etc/php/7.0/apache2/php.ini
 
 ADD 000-default.conf /etc/apache2/sites-enabled/000-default.conf
-#ADD 001-default-ssl.conf /etc/apache2/sites-enabled/001-default-ssl.conf
+ADD 001-default-ssl.conf /etc/apache2/sites-enabled/001-default-ssl.conf
 
 #Cleaning a little bt=it the container to make it slimmer.
 RUN apt-get clean
