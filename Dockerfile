@@ -9,24 +9,24 @@ RUN apt-get -y update && apt-get -y upgrade
 #We install apache2 and php7 with all the usual libraries.
 RUN apt-get -y install \
 apache2 \
-php7.0 \
-libapache2-mod-php7.0 \
-php7.0-mysql \
-php7.0-curl \
-php7.0-gd \
-php7.0-intl \
+php7.4 \
+libapache2-mod-php7.4 \
+php7.4-mysql \
+php7.4-curl \
+php7.4-gd \
+php7.4-intl \
 php-pear \
 php-imagick \
-php7.0-imap \
-php7.0-mcrypt \
+php7.4-imap \
+php7.4-mcrypt \
 php-memcache  \
-php7.0-pspell \
-php7.0-recode \
-php7.0-sqlite3 \
-php7.0-tidy \
-php7.0-xmlrpc \
-php7.0-xsl \
-php7.0-mbstring \
+php7.4-pspell \
+php7.4-recode \
+php7.4-sqlite3 \
+php7.4-tidy \
+php7.4-xmlrpc \
+php7.4-xsl \
+php7.4-mbstring \
 php-gettext
 
 # install GIT
