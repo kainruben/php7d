@@ -1,5 +1,5 @@
 # Imagen a utilizar para el container
-FROM ubuntu:21.10
+FROM ubuntu:20.04
 
 MAINTAINER rubenromero.tk <ruromeroc@gmail.com>
 
@@ -14,6 +14,7 @@ RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get -y install \
 apache2 \
 php7.4 \
+libapache2-mod-php7.4 \
 php7.4-mysql \
 php7.4-curl \
 php7.4-gd \
