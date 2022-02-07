@@ -25,6 +25,6 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
       run:
-        docker build -f Dockerfile -t kainruben/php7:$NOW_DATE .
+        docker build -f Dockerfile -t kainruben/php7:${{env.NOW_DATE}} .
     - name: Docker Push
       run: docker push ${{secrets.DOCKER_USER}}/php7:$NOW_DATE
