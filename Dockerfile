@@ -3,6 +3,10 @@ FROM ubuntu:20.04
 
 MAINTAINER rubenromero.tk <ruromeroc@gmail.com>
 
+ENV TZ=Europe/Minsk
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+
 #Actualizamos
 RUN apt-get -y update && apt-get -y upgrade
 
