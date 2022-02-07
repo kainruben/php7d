@@ -1,5 +1,5 @@
 # Imagen a utilizar para el container
-FROM ubuntu:20.04
+FROM ubuntu:21.10
 
 MAINTAINER rubenromero.tk <ruromeroc@gmail.com>
 
