@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  NOW_DATE: $(date +%s)
+  
 jobs:
 
   build:
@@ -17,7 +20,7 @@ jobs:
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-        NOW_DATE: $(date +%s)
+        
       run: 
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
