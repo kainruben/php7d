@@ -18,16 +18,13 @@ php7.4-intl \
 php-pear \
 php-imagick \
 php7.4-imap \
-php7.4-mcrypt \
 php-memcache  \
 php7.4-pspell \
-php7.4-recode \
 php7.4-sqlite3 \
 php7.4-tidy \
 php7.4-xmlrpc \
 php7.4-xsl \
-php7.4-mbstring \
-php-gettext
+php7.4-mbstring
 
 # install GIT
 RUN apt-get install -y git
