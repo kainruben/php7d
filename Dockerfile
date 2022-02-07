@@ -1,5 +1,5 @@
 # Imagen a utilizar para el container
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 MAINTAINER rubenromero.tk <ruromeroc@gmail.com>
 
@@ -44,6 +44,10 @@ RUN apt-get install -y curl
 
 # Install Composer and make it available in the PATH
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+
+# install npm
+RUN apt-get install -y npm
+
 
  ## Creamos el usuario 
 RUN useradd -ms /bin/bash  usuario
