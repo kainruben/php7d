@@ -23,4 +23,4 @@ jobs:
       run:
         docker build . --file Dockerfile --tag kainruben/php7:$(date +%s)
     - name: Docker Push
-      run: docker push ${{secrets.DOCER_USER}}/kainruben/php7
+      run: docker push ${{secrets.DOCER_USER}}/php7
