@@ -17,10 +17,11 @@ jobs:
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        NOW_DATE: $(date +%s)
       run: 
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
       run:
-        docker build . --file Dockerfile --tag kainruben/php7:$(date +%s)
+        docker build . --file Dockerfile -tag kainruben/php7:$NOW_DATE
     - name: Docker Push
-      run: docker push ${{secrets.DOCKER_USER}}/php7
+      run: docker push ${{secrets.DOCKER_USER}}/php7:$NOW_DATE
